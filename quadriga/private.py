@@ -1,5 +1,7 @@
 import requests, json, sys
-from quadrigacx import check_list_value, check_value
+import quadriga
+print dir(quadriga)
+from quadriga import check_list_value, check_value
 from lobgect import log
 
 logger = log.Log(__name__)
@@ -48,7 +50,7 @@ def _post(url, params):
 
 @_check_auth
 @logger.log_variables
-def account_balance(auth):
+def balance(auth):
     logger.info('Getting account balances.')
     url = 'https://api.quadrigacx.com/v2/balance'
     params = auth.auth_params()
@@ -58,7 +60,7 @@ def account_balance(auth):
 
 @_check_auth
 @logger.log_variables
-def user_transactions(auth, unchecked_book_list=None):
+def transactions(auth, unchecked_book_list=None):
     logger.info('Getting account transactions.')
     url = 'https://api.quadrigacx.com/v2/user_transactions'
     books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
@@ -202,8 +204,8 @@ def _withdraw(auth, url, amount=0, address=None):
 
     return _post( url, params )
 
-def bitcoin_withdraw(auth, amount, address):
+def bitcoin_withdrawal(auth, amount, address):
     return _withdraw(auth, url='bitcoin_withdrawal', amount=amount, address=address)
 
-def ethereum_withdraw(auth, amount, address):
+def ethereum_withdrawal(auth, amount, address):
     return _withdraw(auth, url='ether_withdrawal', amount=amount, address=address)

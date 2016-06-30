@@ -1,5 +1,5 @@
 import requests
-from quadrigacx import check_list_value, check_value
+from quadriga import check_list_value, check_value
 from lobgect import log
 
 logger = log.Log(__name__)
@@ -8,7 +8,7 @@ def _get(url, params):
     return requests.get( url, params=params ).json()
 
 @logger.log_variables
-def current_trading_information(unchecked_book_list=None):
+def ticker(unchecked_book_list=None):
     logger.info('Getting current trading information.')
     url = 'https://api.quadrigacx.com/v2/ticker'
     books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
