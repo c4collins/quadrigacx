@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block page_title %}{{ data.page_info.page_title }}{% endblock %}
+{% block content_title %}{{ data.page_info.page_title }}{% endblock %}
+
+{% block page_content %}
+{% for currency in data.currencies %}
+<table class="col_{{ (12 / data|length)|int }}">
+  <tr>
+    <th>{{ currency.name }} Deposit Address</th>
+  </tr>
+  <tr>
+    {% if currency.deposit_address %}
+    <td><img class="center" src="{{ qrcode(currency.deposit_address, version=4, error_correction='L', box_size=6, border=0, fit=False ) }}"></td>
+  </tr>
+  <tr>
+    <td>{{ currency.deposit_address }}</td>
+    {% else %}
+    <td>You may need to authorize this functionality at <a href="https://www.quadrigacx.com/fund/{{ currency.name }}">https://www.quadrigacx.com/fund/{{ currency.name }}</a></td>
+    {% endif %}
+  </tr>
+</table>
+{% endfor %}
+{% endblock page_content %}

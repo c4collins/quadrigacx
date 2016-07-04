@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block page_title %}{{ data.page_info.page_title }}{% endblock  %}
+{% block content_title %}{{ data.page_info.page_title }}{% endblock %}
+
+{% block page_content %}
+<form class="vertical" method="POST" action="{{ nav_root }}">
+
+  <label for="book">Book:</label>
+  <select name="book" required>
+    <option value="btc_cad" selected>Sell BTC for CAD</option>
+    <option value="btc_usd">Sell BTC for USD</option>
+    <option value="eth_cad">Sell ETH for CAD</option>
+    <option value="eth_btc">Sell ETH for BTC</option>
+  </select>
+
+  <label for="amount">Amount:</label>
+  <input name="amount" type="number" min="0.005" max="21000000" step="0.00000001" required>
+
+  <label for="price">Price:</label>
+  <input name="price" type="number" min="10" step="0.01" >
+
+  <button type="submit" class="blue">Place Order</button>
+</form>
+{% endblock page_content %}

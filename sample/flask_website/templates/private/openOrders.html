@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+
+{% set nav_root = "/openOrders" %}
+{% set page_title = "Open Orders" %}
+
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+
+{% block page_nav %}
+<ul class="menu vertical">
+  <li><a href="{{ nav_root }}">All</a></li>
+  <li><a href="{{ nav_root }}/btc_cad">btc_cad</a></li>
+  <li><a href="{{ nav_root }}/btc_usd">btc_usd</a></li>
+  <li><a href="{{ nav_root }}/eth_btc">eth_btc</a></li>
+  <li><a href="{{ nav_root }}/eth_cad">eth_cad</a></li>
+</ul>
+{% endblock page_nav %}
+
+{% block page_content %}
+<h2>{{ page_title }}</h2>
+{% for book, response in data.iteritems() %}
+<div class="col-mid-3">
+  <h3>{{ book }}</h3>
+  <table>
+    <tr>
+      <th>datetime</th>
+      <th>id</th>
+      <th>type</th>
+      <th>price</th>
+      <th>amount</th>
+      <th>status</th>
+    </tr>
+    {% for transaction in response %}
+    <tr>
+      <td>{{ transaction.datetime | datetime }}</td>
+      <td><a href="/lookupOrder/{{ transaction.id }}">{{ transaction.id }}</a></td>
+      <td>{{ transaction.type | order_type}}</td>
+      <td>{{ transaction.price }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endfor %}
+{% endblock page_content %}

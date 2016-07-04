@@ -1,0 +1,55 @@
+{% extends "main.html" %}
+
+{% block page_title %}Order Book{% endblock page_title %}
+
+{% block page_nav %}
+{% set nav_root = "/orderBook" %}
+<ul class="menu vertical">
+  <li><a href="{{ nav_root }}">All</a></li>
+  <li><a href="{{ nav_root }}/btc_cad">btc_cad</a></li>
+  <li><a href="{{ nav_root }}/btc_usd">btc_usd</a></li>
+  <li><a href="{{ nav_root }}/eth_btc">eth_btc</a></li>
+  <li><a href="{{ nav_root }}/eth_cad">eth_cad</a></li>
+</ul>
+{% endblock page_nav %}
+
+{% block page_content %}
+<h2>Order Book</h2>
+{% for book, response in data.iteritems() %}
+<div class="col_3">
+  <h3>{{ book }} @ {{ response.timestamp }}</h3>
+
+  <table class="col_6">
+    <tr>
+      <th colspan="2">Bids</th>
+    </tr>
+    <tr>
+      <th>Price</th>
+      <th>Amount</th>
+    </tr>
+    {% for price, amount in response.bids %}
+    <tr>
+      <td>{{ price }}</td>
+      <td>{{ amount }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <table class="col_6">
+    <tr>
+      <th colspan="2">Asks</th>
+    </tr>
+    <tr>
+      <th>Price</th>
+      <th>Amount</th>
+    </tr>
+    {% for price, amount in response.asks %}
+    <tr>
+      <td>{{ price }}</td>
+      <td>{{ amount }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endfor %}
+{% endblock page_content %}

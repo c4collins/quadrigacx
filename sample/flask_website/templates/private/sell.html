@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+{% set nav_root = "/sell" %}
+{% set page_title = "Sell" %}
+
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+
+{% block page_nav %}{% endblock page_nav %}
+
+{% block page_content %}
+<h2>{{ page_title }}</h2>
+{% if data['error'] %}
+  <p>Error {{ data.error.message }}</p>
+{% else %}
+  <p>I'm not sure how to interpret this: {{ data }}</p>
+{% endif %}
+{% endblock page_content %}

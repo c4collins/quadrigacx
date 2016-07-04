@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+
+{% block page_title %}Current Trading Information{% endblock page_title %}
+
+{% block page_content %}
+<h2>Current Trading Information</h2>
+{% for book, response in data.iteritems() %}
+<div class="col_3">
+  <h3>{{ book }}</h3>
+  <table>
+    <tr>
+      <th>last</th>
+      <td>{{ response.last }}</td>
+    </tr>
+    <tr>
+      <th>high</th>
+      <td>{{ response.high }}</td>
+    </tr>
+    <tr>
+      <th>low</th>
+      <td>{{ response.low }}</td>
+    </tr>
+    <tr>
+      <th>vwap</th>
+      <td>{{ response.vwap }}</td>
+    </tr>
+    <tr>
+      <th>volume</th>
+      <td>{{ response.volume }}</td>
+    </tr>
+    <tr>
+      <th>bid</th>
+      <td>{{ response.bid }}</td>
+    </tr>
+    <tr>
+      <th>ask</th>
+      <td>{{ response.ask }}</td>
+    </tr>
+  </table>
+</div>
+{% endfor %}
+{% endblock page_content %}

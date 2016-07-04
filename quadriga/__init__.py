@@ -185,7 +185,7 @@ class QCX(object):
                     },
                 },
                 {
-                    'name':'transactions',
+                    'name':'user_transactions',
                     'requires':{
                         'book_list': [value for key,value in self.enumerations('order_books').iteritems()]
                     },
@@ -321,6 +321,7 @@ class QCX(object):
     def _options_preprocessor(self, *options_list):
         """
             This allows the lists in options to be strings, tuples, and lists.
+            Returns {potential_input:valid_output for option in options_list}
             e.g. Quadriga decides to change their currency codes to uppercase.
             I could change:
             [
@@ -332,6 +333,8 @@ class QCX(object):
                 ['eth_btc', 'ETH_BTC'], ('eth_cad', 'ETH_CAD')
             ]
             and nobody else would have to change anything.
+            I could also allow for lists as the first element, providing greater
+            flexibility, but I'm not thinking that far ahead yet.
         """
         options_dict = {}
         for option in options_list:
@@ -361,9 +364,9 @@ class QCX(object):
     def enumerations(self, to_process):
 
         options = {
-            'order_books': self._options_preprocessor( 'btc_cad', 'btc_usd', 'eth_btc', 'eth_cad' ),
+            'order_books'           : self._options_preprocessor( 'btc_cad', 'btc_usd', 'eth_btc', 'eth_cad' ),
             'transaction_time_frame': self._options_preprocessor( 'minute', 'hour' ),
-            'group_transactions': self._options_preprocessor( True, False ),
+            'group_transactions'    : self._options_preprocessor( True, False ),
         }
 
         if isinstance(to_process, list):

@@ -1,0 +1,12 @@
+{% extends "main.html" %}
+
+{% block page_title %}{{ data.page_info.page_title }}{% endblock %}
+{% block content_title %}{{ data.page_info.page_title }}{% endblock %}
+
+{% block page_content %}
+{% if data.response.error %}
+  <p>Error {{ data.response.error.message }}</p>
+{% else %}
+  <p>I'm not sure how to interpret this: {{ data.response }}</p>
+{% endif %}
+{% endblock page_content %}

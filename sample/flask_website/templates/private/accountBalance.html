@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% block page_title %}Account Balance{% endblock page_title %}
+
+{% block page_content %}
+<h2>Account Balance</h2>
+<div class="col_3">
+  <h3>balances</h3>
+  <table>
+    <tr>
+      <th>currency</th>
+      <th>amount</th>
+    </tr>
+    {% for currency, amount in data.iteritems() %}
+      <tr>
+        <td>{{ currency }}</td>
+        <td>{{ amount }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock page_content %}

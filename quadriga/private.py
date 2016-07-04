@@ -60,7 +60,7 @@ def balance(auth):
 
 @_check_auth
 @logger.log_variables
-def transactions(auth, unchecked_book_list=None):
+def user_transactions(auth, unchecked_book_list=None):
     logger.info('Getting account transactions.')
     url = 'https://api.quadrigacx.com/v2/user_transactions'
     books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
@@ -73,6 +73,7 @@ def transactions(auth, unchecked_book_list=None):
         params['sort'] = 'desc'
         params['book'] = book
         response_data[book] = _post( url, params )
+        print response_data[book]
 
     return response_data
 
@@ -188,7 +189,7 @@ def bitcoin_deposit_address(auth):
     currency = {'name': 'Bitcoin', 'url':'bitcoin_deposit_address'}
     return _deposit_address(auth, currency)
 
-def ethereum_deposit_address(auth):
+def ether_deposit_address(auth):
     currency = {'name': 'Ethereum', 'url':'ether_deposit_address'}
     return _deposit_address(auth, currency)
 

@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+
+{% block page_title %}Transactions{% endblock page_title %}
+
+{% block page_nav %}
+{% set nav_root = "/transactions" %}
+<ul class="menu vertical">
+  <li><a href="{{ nav_root }}">All</a></li>
+  <li><a href="{{ nav_root }}/btc_cad">btc_cad</a></li>
+  <li><a href="{{ nav_root }}/btc_usd">btc_usd</a></li>
+  <li><a href="{{ nav_root }}/eth_btc">eth_btc</a></li>
+  <li><a href="{{ nav_root }}/eth_cad">eth_cad</a></li>
+</ul>
+{% endblock page_nav %}
+
+{% block page_content %}
+<h2>Transactions</h2>
+{% for book, response in data.iteritems() %}
+<div class="col_3">
+  <h3>{{ book }}</h3>
+  <table>
+    <tr>
+      <th>date</th>
+      <th>tid</th>
+      <th>price</th>
+      <th>amount</th>
+      <th>side</th>
+    </tr>
+    {% for transaction in response %}
+    <tr>
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.tid }}</td>
+      <td>{{ transaction.price }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.side }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endfor %}
+{% endblock page_content %}

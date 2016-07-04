@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <title>QuadrigaCX {% block page_title %}API Home{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/99lime/0.94/css/kickstart.css">
+  <script src="https://cdn.jsdelivr.net/jquery/3.0.0/jquery.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/99lime/0.94/js/kickstart.js" defer></script>
+
+</head>
+<body lang="en_CA">
+  <h1><a href="/">QuadrigaCX API</a></h1>
+  <nav>
+    {% block site_nav %}
+    <ul class="menu">
+      <li><a href="">Public Functions</a>
+        <ul>
+          <li><a href="/currentTradingInformation">Current Trading Information</a></li>
+          <li><a href="/orderBook">Order Book</a></li>
+          <li><a href="/transactions">Transactions</a></li>
+        </ul>
+      </li>
+      <li><a href="">Authenticated Functions</a>
+        <ul>
+          <li><a href="/accountBalance">Account Balance</a></li>
+          <li><a href="/userTransactions">User Transactions</a></li>
+          <li><a href="">Order Functions</a>
+            <ul>
+              <li><a href="/openOrders">Open Orders</a></li>
+              <li><a href="/lookupOrder">Lookup Order</a></li>
+              <li><a href="/cancelOrder">Cancel Order</a></li>
+              <li><a href="/buy">Buy Orders</a></li>
+              <li><a href="/sell">Sell Orders</a></li>
+            </ul>
+          </li>
+          <li><a href="">Currency Functions</a>
+            <ul>
+              <li><a href="/deposit">Deposit Cryptocurrencies</a></li>
+              <li><a href="/withdraw">Withdraw Cryptocurrencies</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    {% endblock site_nav %}
+  </nav>
+  <h3>{% block content_title %}API Home{% endblock %}</h3>
+  <section class="col_11">{% block page_content %}{% endblock %}</section>
+  <nav class="col_1">{% block page_nav %}{% endblock %}</nav>
+
+
+</body>
+</html>

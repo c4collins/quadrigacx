@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block page_title %}{{ data.page_info.page_title }}{% endblock %}
+{% block content_title %}{{ data.page_info.page_title }}{% endblock %}
+
+{% block page_content %}
+<form class="vertical" method="POST" action="{{ nav_root }}">
+
+  <label for="currency">Currency:</label>
+  <select name="currency" required>
+    <option value="btc" selected>withdraw Bitcoin</option>
+    <option value="eth">withdraw Ethereum</option>
+  </select>
+
+  <label for="amount">Amount:</label>
+  <input name="amount" type="number" min="0.005" max="21000000" step="0.00000001" required>
+
+  <label for="address">Address:</label>
+  <input name="address" type="text" required>
+
+  <button type="submit" class="blue">Withdraw!</button>
+</form>
+{% endblock page_content %}

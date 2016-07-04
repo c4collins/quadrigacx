@@ -1,0 +1,61 @@
+{% extends "main.html" %}
+
+{% block page_title %}User Transactions{% endblock page_title %}
+
+{% block page_nav %}
+{% set nav_root = "/userTransactions" %}
+<ul class="menu vertical">
+  <li><a href="{{ nav_root }}">All</a></li>
+  <li><a href="{{ nav_root }}/btc_cad">btc_cad</a></li>
+  <li><a href="{{ nav_root }}/btc_usd">btc_usd</a></li>
+  <li><a href="{{ nav_root }}/eth_btc">eth_btc</a></li>
+  <li><a href="{{ nav_root }}/eth_cad">eth_cad</a></li>
+</ul>
+{% endblock page_nav %}
+
+{% block page_content %}
+<h2>User Transactions</h2>
+{% for book, response in data.iteritems() %}
+<div class="col-mid-3">
+  <h3>{{ book }}</h3>
+  <table>
+    <tr>
+      <th>datetime</th>
+      <th>id</th>
+      <th>type</th>
+      <th>method</th>
+      <th>order_id</th>
+      <th>fee</th>
+      <th>rate</th>
+      <th>cad</th>
+      <th>usd</th>
+      <th>btc</th>
+      <th>eth</th>
+      <th>btc_cad</th>
+      <th>btc_usd</th>
+      <th>eth_cad</th>
+      <th>eth_btc</th>
+    </tr>
+    {% for transaction in response %}
+    <tr>
+      <td>{{ transaction.datetime | datetime }}</td>
+      <td>{{ transaction.id }}</td>
+      <td>{{ transaction.type | transaction_type}}</td>
+      <td>{{ transaction.method }}</td>
+      <td><a href="/lookupOrder/{{ transaction.order_id }}">{{ transaction.order_id }}</a></td>
+      <td>{{ transaction.fee }}</td>
+      <td>{{ transaction.rate }}</td>
+      <td>{{ transaction.cad }}</td>
+      <td>{{ transaction.usd }}</td>
+      <td>{{ transaction.btc }}</td>
+      <td>{{ transaction.eth }}</td>
+      <td>{{ transaction.btc_cad }}</td>
+      <td>{{ transaction.btc_usd }}</td>
+      <td>{{ transaction.eth_cad }}</td>
+      <td>{{ transaction.eth_btc }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endfor %}
+{% endblock page_content %}

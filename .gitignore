@@ -1,5 +1,6 @@
 # Project ignores
 *.pyc
+sample/*/config/auth.cfg
 
 # Build ignores
 build/

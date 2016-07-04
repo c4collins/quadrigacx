@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+
+{% set nav_root = "/lookupOrder" %}
+{% set page_title = "Lookup Order" %}
+
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+
+{% block page_nav %}{% endblock page_nav %}
+
+{% block page_content %}
+{% for response in data %}
+<h2>{{ page_title }} - {{ response.id }}</h2>
+<div class="col-mid-3">
+  <table>
+    <tr>
+      <th>book</th>
+      <th>price</th>
+      <th>amount</th>
+      <th>type</th>
+      <th>status</th>
+      <th>created</th>
+      <th>updated</th>
+    </tr>
+    <tr>
+      <td>{{ response.book }}</td>
+      <td>{{ response.price }}</td>
+      <td>{{ response.amount }}</td>
+      <td>{{ response.type | order_type }}</td>
+      <td>{{ response.status | order_status }}</td>
+      <td>{{ response.created }}</td>
+      <td>{{ response.updated }}</td>
+    </tr>
+  </table>
+</div>
+{% endfor %}
+{% endblock page_content %}

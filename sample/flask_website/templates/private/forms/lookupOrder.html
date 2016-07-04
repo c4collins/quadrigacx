@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+{% set nav_root = "/lookupOrder" %}
+{% set page_title = "Lookup Order" %}
+
+{% block page_title %}{{ page_title }}{% endblock page_title %}
+
+{% block page_nav %}{% endblock page_nav %}
+
+{% block page_content %}
+<h2>{{ page_title }}</h2>
+<form method="POST" action="{{ nav_root }}">
+  <label for="order_id">Order ID</label>
+  <input name="order_id">
+  <button type="submit" class="blue">Loopkup Order</button>
+</form>
+{% endblock page_content %}
