@@ -3,11 +3,24 @@ if sys.version_info < (3,):
     import ConfigParser
 else:
     import configparser as ConfigParser
-from lobgect import log
+try:
+    from lobgect import log
+    lobject_support = True
+except ImportError:
+    import logging
+    lobject_support = False
+
 
 class Auth(object):
     def __init__(self, config_filepath=None, credentials=None):
-        self.logger = log.Log(__name__)
+
+        if lobject_support:
+            self.logger = log.Log(__name__)
+        else:
+            self.logger = logging.getLogger(__name__)
+            self.logger.log_variables = lambda x: x
+            self.logger.print_post_data = lambda x: x
+
         self.logger.info("Initializing Auth object for QuadrigaCX")
 
         self.nonce = int(time.time())

@@ -1,9 +1,19 @@
 from collections import Iterable
-from lobgect import log
 from auth import Auth
 import random
+try:
+    from lobgect import log
+    lobject_support = True
+except ImportError:
+    import logging
+    lobject_support = False
 
-logger = log.Log(__name__)
+if lobject_support:
+    logger = log.Log(__name__)
+else:
+    logger = logging.getLogger(__name__)
+    logger.log_variables = lambda x: x
+    logger.print_post_data = lambda x: x
 
 @logger.log_variables
 def check_list_value(unchecked_value, checked_base_object=[], known_good_options=[]):
@@ -68,7 +78,13 @@ def check_value(unchecked_value, checked_base_object=None, default_value=None, k
 
 class QCX(object):
     def __init__(self, config_filepath=None, credentials=None):
-        self.logger = log.Log(__name__)
+
+        if lobject_support:
+            self.logger = log.Log(__name__)
+        else:
+            self.logger = logging.getLogger(__name__)
+            self.logger.log_variables = lambda x: x
+            self.logger.print_post_data = lambda x: x
 
         if config_filepath or credentials:
             self.auth = Auth(config_filepath=config_filepath, credentials=credentials)

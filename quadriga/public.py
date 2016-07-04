@@ -1,8 +1,19 @@
 import requests
 from quadriga import check_list_value, check_value
-from lobgect import log
 
-logger = log.Log(__name__)
+try:
+    from lobgect import log
+    lobject_support = True
+except ImportError:
+    import logging
+    lobject_support = False
+
+if lobject_support:
+    logger = log.Log(__name__)
+else:
+    logger = logging.getLogger(__name__)
+    logger.log_variables = lambda x: x
+    logger.print_post_data = lambda x: x
 
 def _get(url, params):
     return requests.get( url, params=params ).json()
