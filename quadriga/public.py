@@ -33,7 +33,7 @@ def ticker(unchecked_book_list=None):
     return response_data
 
 @logger.log_variables
-def order_book(unchecked_book_list=None, group_transactions=True):
+def order_book(unchecked_book_list=None, group_transactions=False):
     logger.info('Getting live order book.')
     url = 'https://api.quadrigacx.com/v2/order_book'
     books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])

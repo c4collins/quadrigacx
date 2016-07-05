@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 from flask import Flask, render_template, request
 from flask_qrcode import QRcode
-from quadriga import public as qcx_public, auth as qcx_auth, private as qcx_private, QCX
+from quadriga import  QCX
 from lobgect import log
 
 app = Flask(__name__)

@@ -137,22 +137,35 @@ def buy(auth, unchecked_book, unchecked_amount, unchecked_price=None):
     if unchecked_price: # Limit Order // The None case is handled by requests anyway, but I thought it was nice to be explicit
         params['price'] = check_value(unchecked_price, expected_type=float)
 
-    try:
-        total = float(params['price']) * float(params['amount'])
-    except TypeError:
-        total = "ERR"
+        try:
+            total = float(params['price']) * float(params['amount'])
+        except TypeError:
+            total = "ERR"
 
-    if total > 1 and float(params['amount']) >= 0.005 and float(params['price']) >= 10:
-        logger.info('Buying {} {} at {} for {} {} total'.format(params['amount'], params['book'][:3].upper(), params['price'], total, params['book'][-3:].upper()))
+        if total > 1 and float(params['amount']) >= 0.005 and float(params['price']) >= 10:
+            logger.info('Buying {} {} at {} for {} {} total'.format(params['amount'], params['book'][:3].upper(), params['price'], total, params['book'][-3:].upper()))
 
-        return _post( url, params )
+            return _post( url, params )
+
+        else:
+            return {'error':
+                {
+                    'message':'Incorrect value {}{} is below the minimum of $1.00CAD'.format(total, params['book'][-3:].upper())
+                }
+            }
 
     else:
-        return {'error':
-            {
-                'message':'Incorrect value {}{} is below the minimum of $1.00CAD'.format(total, params['book'][-3:].upper())
+        if float(params['amount']) >= 0.005:
+            logger.info('Buying {} {}'.format(params['amount'], params['book'][:3].upper()))
+
+            return _post( url, params )
+
+        else:
+            return {'error':
+                {
+                    'message':'Incorrect amount {} is below the minimum of 0.005 {}'.format(float(params['amount']), params['book'][-3:].upper())
+                }
             }
-        }
 
 @_check_auth
 @logger.log_variables

@@ -324,7 +324,6 @@ class QCX(object):
         return [item['name'] for item in self.methods()['private']]
 
     def _enumerator(self, a, options):
-        self.logger.debug(a)
         try:
             return options[a]
         except KeyError:
