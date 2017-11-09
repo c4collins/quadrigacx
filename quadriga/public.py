@@ -1,5 +1,6 @@
 import requests
 from quadriga import check_list_value, check_value
+from config.config import TRADE_PAIRS
 
 try:
     from lobgect import log
@@ -22,7 +23,7 @@ def _get(url, params):
 def ticker(unchecked_book_list=None):
     logger.info('Getting current trading information.')
     url = 'https://api.quadrigacx.com/v2/ticker'
-    books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
+    books = check_list_value(unchecked_book_list, known_good_options=TRADE_PAIRS)
     response_data = {}
 
     for book in books:
@@ -36,7 +37,7 @@ def ticker(unchecked_book_list=None):
 def order_book(unchecked_book_list=None, group_transactions=False):
     logger.info('Getting live order book.')
     url = 'https://api.quadrigacx.com/v2/order_book'
-    books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
+    books = check_list_value(unchecked_book_list, known_good_options=TRADE_PAIRS)
     group = check_value(group_transactions, expected_type=bool)
     response_data = {}
 
@@ -49,7 +50,7 @@ def order_book(unchecked_book_list=None, group_transactions=False):
 @logger.log_variables
 def transactions(unchecked_book_list=None, unchecked_time_frame='hour'):
     url = 'https://api.quadrigacx.com/v2/transactions'
-    books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
+    books = check_list_value(unchecked_book_list, known_good_options=TRADE_PAIRS)
     time_frame = check_value(unchecked_time_frame, default_value='hour', known_good_options=['hour', 'minute'])
     response_data = {}
 

@@ -1,7 +1,7 @@
 import requests, json, sys
 import quadriga
-print dir(quadriga)
 from quadriga import check_list_value, check_value
+from config.config import TRADE_PAIRS
 
 try:
     from lobgect import log
@@ -69,7 +69,7 @@ def balance(auth):
 def user_transactions(auth, unchecked_book_list=None):
     logger.info('Getting account transactions.')
     url = 'https://api.quadrigacx.com/v2/user_transactions'
-    books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
+    books = check_list_value(unchecked_book_list, known_good_options=TRADE_PAIRS)
     response_data = {}
 
     for book in books:
@@ -79,7 +79,7 @@ def user_transactions(auth, unchecked_book_list=None):
         params['sort'] = 'desc'
         params['book'] = book
         response_data[book] = _post( url, params )
-        print response_data[book]
+        print(response_data[book])
 
     return response_data
 
@@ -88,7 +88,7 @@ def user_transactions(auth, unchecked_book_list=None):
 def open_orders(auth, unchecked_book_list=None):
     logger.info('Getting open orders.')
     url = 'https://api.quadrigacx.com/v2/open_orders'
-    books = check_list_value(unchecked_book_list, known_good_options=['btc_cad', 'btc_usd', 'eth_btc', 'eth_cad'])
+    books = check_list_value(unchecked_book_list, known_good_options=TRADE_PAIRS)
     response_data = {}
 
     for book in books:
@@ -132,7 +132,7 @@ def buy(auth, unchecked_book, unchecked_amount, unchecked_price=None):
     url = 'https://api.quadrigacx.com/v2/buy'
 
     params = auth.auth_params()
-    params['book'] = check_value(unchecked_book, known_good_options=['btc_cad', 'btc_usd', 'eth_cad', 'btc_eth'])
+    params['book'] = check_value(unchecked_book, known_good_options=TRADE_PAIRS)
     params['amount'] = check_value(unchecked_amount, expected_type=float)
     if unchecked_price: # Limit Order // The None case is handled by requests anyway, but I thought it was nice to be explicit
         params['price'] = check_value(unchecked_price, expected_type=float)
@@ -173,7 +173,7 @@ def sell(auth, unchecked_book, unchecked_amount, unchecked_price=None):
     url = 'https://api.quadrigacx.com/v2/sell'
 
     params = auth.auth_params()
-    params['book'] = check_value(unchecked_book, known_good_options=['btc_cad', 'btc_usd', 'eth_cad', 'btc_eth'])
+    params['book'] = check_value(unchecked_book, known_good_options=TRADE_PAIRS)
     params['amount'] = check_value(unchecked_amount, expected_type=float)
     if unchecked_price: # Limit Order // The None case is handled by requests anyway, but I thought it was nice to be explicit
         params['price'] = check_value(unchecked_price, expected_type=float)

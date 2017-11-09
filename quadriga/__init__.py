@@ -1,5 +1,5 @@
 from collections import Iterable
-from auth import Auth
+from .auth import Auth
 import random
 try:
     from lobgect import log
@@ -45,7 +45,6 @@ def check_list_value(unchecked_value, checked_base_object=[], known_good_options
 @logger.log_variables
 def check_value(unchecked_value, checked_base_object=None, default_value=None, known_good_options=[], expected_type=None):
     logger.debug('The unchecked value is \'{}\''.format(unchecked_value))
-    checked_value = checked_base_object
 
     # Make sure the input is a good known value
     if not unchecked_value or (known_good_options and unchecked_value not in known_good_options):
@@ -95,7 +94,7 @@ class QCX(object):
                 {
                     'name':'ticker',
                     'requires': {
-                        'book_list': [value for key,value in self.enumerations('order_books').iteritems()]
+                        'book_list': [value for key,value in self.enumerations('order_books').items()]
                     },
                     'optional': {},
                     'returns': {
@@ -114,10 +113,10 @@ class QCX(object):
                 {
                     'name':'order_book',
                     'requires':{
-                        'book_list': [value for key,value in self.enumerations('order_books').iteritems()]
+                        'book_list': [value for key,value in self.enumerations('order_books').items()]
                     },
                     'optional':{
-                        'group_transactions': self.enumerations('group_transactions')[random.choice(self.enumerations('group_transactions').keys())]
+                        'group_transactions': self.enumerations('group_transactions')[random.choice(list(self.enumerations('group_transactions').keys()))]
                     },
                     'returns':{
                         'eth_btc': {
@@ -138,10 +137,10 @@ class QCX(object):
                 {
                     'name':'transactions',
                     'requires':{
-                        'book_list': [value for key,value in self.enumerations('order_books').iteritems()]
+                        'book_list': [value for key,value in self.enumerations('order_books').items()]
                     },
                     'optional':{
-                        'transaction_time_frame': self.enumerations('transaction_time_frame')[random.choice(self.enumerations('transaction_time_frame').keys())]
+                        'transaction_time_frame': self.enumerations('transaction_time_frame')[random.choice(list(self.enumerations('transaction_time_frame').keys()))]
                     },
                     'returns':{
                         'btc_cad': [
@@ -203,7 +202,7 @@ class QCX(object):
                 {
                     'name':'user_transactions',
                     'requires':{
-                        'book_list': [value for key,value in self.enumerations('order_books').iteritems()]
+                        'book_list': [value for key,value in self.enumerations('order_books').items()]
                     },
                     'optional':{},
                     'returns':{
@@ -221,7 +220,7 @@ class QCX(object):
                 {
                     'name':'open_orders',
                     'requires':{
-                        'book_list': [value for key,value in self.enumerations('order_books').iteritems()]
+                        'book_list': [value for key,value in self.enumerations('order_books').items()]
                     },
                     'optional':{},
                     'returns':{
@@ -266,7 +265,7 @@ class QCX(object):
                 {
                     'name':'buy',
                     'requires':{
-                        'book': self.enumerations('order_books')[random.choice(self.enumerations('order_books').keys())],
+                        'book': self.enumerations('order_books')[random.choice(list(self.enumerations('order_books').keys()))],
                         'amount': 0.005,
                     },
                     'optional':{
@@ -277,7 +276,7 @@ class QCX(object):
                 {
                     'name':'sell',
                     'requires':{
-                        'book': self.enumerations('order_books')[random.choice(self.enumerations('order_books').keys())],
+                        'book': self.enumerations('order_books')[random.choice(list(self.enumerations('order_books').keys()))],
                         'amount': 0.010,
                     },
                     'optional':{
@@ -379,7 +378,7 @@ class QCX(object):
     def enumerations(self, to_process):
 
         options = {
-            'order_books'           : self._options_preprocessor( 'btc_cad', 'btc_usd', 'eth_btc', 'eth_cad' ),
+            'order_books'           : self._options_preprocessor( 'btc_cad', 'btc_usd', 'eth_btc', 'eth_cad', 'ltc_cad', 'bch_cad' ),
             'transaction_time_frame': self._options_preprocessor( 'minute', 'hour' ),
             'group_transactions'    : self._options_preprocessor( True, False ),
         }
@@ -406,7 +405,7 @@ class QCX(object):
             'price': 'unchecked_price',
         }
 
-        for user_name, api_name in name_adjustments.iteritems():
+        for user_name, api_name in name_adjustments.items():
             if user_name in arg_names:
                 kwargs[api_name] = kwargs[user_name]
                 del kwargs[user_name]

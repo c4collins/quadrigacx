@@ -15,11 +15,19 @@ Use sample.cfg in the config folder
 
 ### Usage
 
-Basically, create a QCX object, passing in the path to the config file [like in `quadrigacx/config/sample.cfg`], or the config options in a dict [i.e. `{client_id:0000, key:yOurKeY, secret:Y0Ur53crr3T142351236}`]
+Basically, create a QCX object, passing in the path to the config file [like in `quadrigacx/config/sample.cfg`],
 
-    import quadrigacx
-    qcx = quadrigacx.QCX('config/auth.cfg')
+    import quadriga
+    qcx = quadriga.QCX('config/auth.cfg')
 
+ or the config options in a dict:
+ 
+    qcx = quadriga.QCX(credentials={
+        client_id:0000, 
+        key:yOurKeY, 
+        secret:Y0Ur53crr3T142351236
+    })
+ 
 That QCX object then has a methods called `methods` which will tell you all of the actions available in this format:
 
     qcx.methods()
@@ -68,12 +76,12 @@ You can take that `name` and pass it into QCX.api(), along with the `required` (
 
 | **Function Name** | **Auth** | **Required Arguments** | **Default** | **Optional Arguments** | **Default** |
 |:-----------------------:|:--------:|:--------------------------:|:------------------------------------:|:----------------------------------------------------:|:-----------:|
-| ticker | No | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc] |  |  |
-| order_book | No | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc] | A boolean to group orders with the same price or not |  False |
-| transactions | No | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc] | A time frame; last 'minute', or 'hour' | hour |
+| ticker | No | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc, ltc_cad, bch_cad] |  |  |
+| order_book | No | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc, ltc_cad, bch_cad] | A boolean to group orders with the same price or not |  False |
+| transactions | No | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc, ltc_cad, bch_cad] | A time frame; last 'minute', or 'hour' | hour |
 | balance | Yes |  |  |  |  |
-| user_transactions | Yes | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc] |  |  |
-| open_orders | Yes | open_orders | [btc_cad, btc_usd, eth_cad, eth_btc] |  |  |
+| user_transactions | Yes | a or a list of valid books | [btc_cad, btc_usd, eth_cad, eth_btc, ltc_cad, bch_cad] |  |  |
+| open_orders | Yes | open_orders | [btc_cad, btc_usd, eth_cad, eth_btc, ltc_cad, bch_cad] |  |  |
 | lookup_order | Yes | order_id |  |  |  |
 | cancel_order | Yes | order_id |  |  |  |
 | buy | Yes | a valid book |  | a price |  |
@@ -111,7 +119,7 @@ You can take that `name` and pass it into QCX.api(), along with the `required` (
 
 #### Optional parameter as List
 
-    book_list = ['btc_cad', 'eth_btc']
+    book_list = ['btc_cad', 'eth_btc', 'ltc_cad', 'bch_cad']
     print qcx.api('ticker', book_list=book_list)
 
     >> {'btc_cad': {u'volume': u'161.49814654', u'last': u'886.00', u'timestamp': u'1467639055', u'bid': u'878.20', u'vwap': u'867.00', u'high': u'886.00', u'low': u'856.79', u'ask': u'887.97'}, 'eth_btc': {u'volume': u'2256.84091030', u'last': u'0.01722000', u'timestamp': u'1467639055', u'bid': u'0.01722000', u'vwap': u'0.01794464', u'high': u'0.01855999', u'low': u'0.01722000', u'ask': u'0.01819999'}}

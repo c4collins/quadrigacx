@@ -1,3 +1,5 @@
+This file is out of date - review README.md for accurate information.
+
 Python QuadrigaCX
 =================
 
