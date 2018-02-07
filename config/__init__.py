@@ -1,0 +1,2 @@
+TRADE_PAIRS = ['btc_cad','btc_usd','eth_cad','eth_btc','ltc_cad','ltc_btc','bch_cad','bch_btc','btg_cad','btg_btc']
+CURRENT_TRADE_INFORMATION_COMPONENTS = ['ask', 'bid', 'high', 'last', 'low', 'timestamp', 'volume', 'vwap']

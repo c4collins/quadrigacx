@@ -1,6 +1,6 @@
 import requests
 from quadriga import check_list_value, check_value
-from config.config import TRADE_PAIRS
+from config.__init__ import TRADE_PAIRS
 
 try:
     from lobgect import log

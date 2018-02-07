@@ -1,7 +1,7 @@
 import requests, json, sys
 import quadriga
 from quadriga import check_list_value, check_value
-from config.config import TRADE_PAIRS
+from config.__init__ import TRADE_PAIRS
 
 try:
     from lobgect import log
@@ -108,7 +108,8 @@ def lookup_order(auth, unchecked_order_id):
     url = 'https://api.quadrigacx.com/v2/lookup_order'
 
     params = auth.auth_params()
-    params['id'] = check_value(unchecked_order_id, expected_type=None) # Something should be done to check this, but what?
+    params['id'] = check_value(unchecked_order_id,
+                               expected_type=None)  # Something should be done to check this, but what?
 
     logger.info('Looking up order: {}'.format(params['id']))
 
@@ -120,7 +121,8 @@ def cancel_order(auth, unchecked_order_id):
     url = 'https://api.quadrigacx.com/v2/cancel_order'
 
     params = auth.auth_params()
-    params['id'] = check_value(unchecked_order_id, expected_type=None) # Something should be done to check this, but what?
+    params['id'] = check_value(unchecked_order_id,
+                               expected_type=None)  # Something should be done to check this, but what?
 
     logger.info('Cancelling order: {}'.format(params['id']))
 

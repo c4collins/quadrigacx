@@ -1,25 +1,17 @@
 from collections import Iterable
 from .auth import Auth
+import config
 import random
-try:
-    from lobgect import log
-    lobject_support = True
-except ImportError:
-    import logging
-    lobject_support = False
+import logging
 
-if lobject_support:
-    logger = log.Log(__name__)
-else:
-    logger = logging.getLogger(__name__)
-    logger.log_variables = lambda x: x
-    logger.print_post_data = lambda x: x
+logger = logging.getLogger(__name__)
+logger.log_variables = lambda x: x
+logger.print_post_data = lambda x: x
 
 @logger.log_variables
 def check_list_value(unchecked_value, checked_base_object=[], known_good_options=[]):
     logger.debug('The unchecked value is \'{}\''.format(unchecked_value))
     checked_value = list(checked_base_object)
-    unchecked_list = list(checked_base_object)
 
     if not unchecked_value:
         unchecked_list = known_good_options
@@ -43,7 +35,7 @@ def check_list_value(unchecked_value, checked_base_object=[], known_good_options
         return known_good_options
 
 @logger.log_variables
-def check_value(unchecked_value, checked_base_object=None, default_value=None, known_good_options=[], expected_type=None):
+def check_value(unchecked_value, default_value=None, known_good_options=[], expected_type=None):
     logger.debug('The unchecked value is \'{}\''.format(unchecked_value))
 
     # Make sure the input is a good known value
@@ -78,12 +70,9 @@ def check_value(unchecked_value, checked_base_object=None, default_value=None, k
 class QCX(object):
     def __init__(self, config_filepath=None, credentials=None):
 
-        if lobject_support:
-            self.logger = log.Log(__name__)
-        else:
-            self.logger = logging.getLogger(__name__)
-            self.logger.log_variables = lambda x: x
-            self.logger.print_post_data = lambda x: x
+        self.logger = logging.getLogger(__name__)
+        self.logger.log_variables = lambda x: x
+        self.logger.print_post_data = lambda x: x
 
         if config_filepath or credentials:
             self.auth = Auth(config_filepath=config_filepath, credentials=credentials)
@@ -357,7 +346,7 @@ class QCX(object):
                 options_dict[option] = option
             elif isinstance(option, (list, tuple)):
                 if len(option) > 2:
-                    self.logger.warning('truncating object from '+option+' to '+option[:2])
+                    self.logger.warning('truncating object from ['+','.join(option)+'] to '+option[:2])
                     options_dict[option[0]] = option[1]
                 elif len(option) == 2:
                     options_dict[option[0]] = option[1]
@@ -378,7 +367,7 @@ class QCX(object):
     def enumerations(self, to_process):
 
         options = {
-            'order_books'           : self._options_preprocessor( 'btc_cad', 'btc_usd', 'eth_btc', 'eth_cad', 'ltc_cad', 'bch_cad' ),
+            'order_books'           : self._options_preprocessor( *config.TRADE_PAIRS ),
             'transaction_time_frame': self._options_preprocessor( 'minute', 'hour' ),
             'group_transactions'    : self._options_preprocessor( True, False ),
         }
